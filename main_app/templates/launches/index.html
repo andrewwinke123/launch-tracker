@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link 
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/launches/launch-index.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h1>Luanch List</h1>
+  <img src="{% static '' %}" alt="load" />
+  <img src="{% static '' %}" alt="load" />
+  <img src="{% static '' %}" alt="load" />
+  <img src="{% static '' %}" alt="load" />
+</section>
+
+<section class="card-container">
+  {% for rocket in rockets %}
+    <div class="card">
+      <div class="card-content">
+        <div class="card-img-container">
+          <img 
+            src="{% static '' %}" 
+            alt="load"
+          >
+        </div>
+        <h2 class="card-title">{{ rocket.model }}</h2>
+        <p>A {{ rocket.size }} lift {{ rocket.mfg }} Rocket</p>
+        <p><small>Orbit: {{ rocket.orbit }}</small></p>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

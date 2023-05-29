@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +9,10 @@
   <link
     rel="shortcut icon"
     type="image/png"
-    href=""
+    href="{% static 'images/splash.svg' %}"
   >
   <title>Launch Tracker</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
   {% block head %}
   {% endblock %}
 </head>
@@ -18,13 +21,14 @@
     <div class="header-logo-container">
       <a href="/">
         <img 
-          src=""
+        src="{% static 'images/header-logo.svg' %}"
           alt="The Launch Tracker Logo"
         >
       </a>
     </div>
     <nav>
       <ul>
+        <li><a href="/launches">All Launches</a></li>
         <li><a href="/about">About 🚀</a></li>
       </ul>
     </nav>
