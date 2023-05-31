@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<section class="logo-container">
+  <div class="rocket-container">
+    <img src="{% static 'images/rocket.svg' %}" alt="The Launch Tracker logo" />
+  </div>
+  <img 
+    src="{% static 'images/logotype.svg' %}" 
+    alt="Text reads: Launch Tracker"
+  />
+</section>
+
+{% endblock %}
