@@ -22,7 +22,7 @@
 <section class="card-container">
   {% for rocket in rockets %}
     <div class="card">
-      <a href="/launches/{{ rocket.id }}">
+      <a href="{% url 'launch-detail' rocket.id %}">
         <div class="card-content">
           <div class="card-img-container">
           <img 
