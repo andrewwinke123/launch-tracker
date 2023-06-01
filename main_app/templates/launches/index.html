@@ -20,9 +20,9 @@
 </section>
 
 <section class="card-container">
-  {% for rocket in rockets %}
+  {% for launch in launches %}
     <div class="card">
-      <a href="{% url 'launch-detail' rocket.id %}">
+      <a href="{% url 'launch-detail' launch.id %}">
         <div class="card-content">
           <div class="card-img-container">
           <img 
@@ -30,10 +30,10 @@
             alt="load"
           >
         </div>
-        <h2 class="card-title">{{ rocket.model }}</h2>
-        <p>A {{ rocket.size }} lift {{ rocket.mfg }} Rocket</p>
-        <p><small>Orbit: {{ rocket.orbit }}</small></p>
-        <p><small>{{ rocket.description }}</small></p>
+        <h2 class="card-title">{{ launch.model }}</h2>
+        <p>A {{ launch.size }} lift {{ launch.mfg }} Launch</p>
+        <p><small>Orbit: {{ launch.orbit }}</small></p>
+        <p><small>{{ launch.description }}</small></p>
       </div>
     </div>
   {% endfor %}

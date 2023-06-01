@@ -3,7 +3,7 @@ from django.db import models
 
 from django.db import models
 
-class Rocket(models.Model):
+class Launch(models.Model):
   mission = models.CharField(max_length=50)
   model = models.CharField(max_length=50)
   mfg = models.TextField(max_length=50)

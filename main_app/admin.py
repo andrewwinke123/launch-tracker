@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Rocket
+from .models import Launch
 
-admin.site.register(Rocket)
+admin.site.register(Launch)

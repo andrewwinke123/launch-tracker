@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Rocket
+from .models import Launch
 from django.views.generic.edit import CreateView
-from .models import Rocket
+from .models import Launch
 
-class CatCreate(CreateView):
-  model =  Rocket
+class LaunchCreate(CreateView):
+  model =  Launch
   fields = '__all__'
 
 
@@ -16,9 +16,9 @@ def about(request):
   return render(request, 'about.html')
 
 def launch_index(request):
-  rockets = Rocket.objects.all()
-  return render(request, 'launches/index.html', { 'rockets': rockets })
+  launches = Launch.objects.all()
+  return render(request, 'launches/index.html', { 'launches': launches })
 
-def launch_detail(request, rocket_id):
-  rocket = Rocket.objects.get(id=rocket_id)
-  return render(request, 'launches/detail.html', { 'rocket': rocket })
+def launch_detail(request, launch_id):
+  launch = Launch.objects.get(id=launch_id)
+  return render(request, 'launches/detail.html', { 'launch': launch })
