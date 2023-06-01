@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from .models import Rocket
+from django.views.generic.edit import CreateView
+from .models import Rocket
+
+class CatCreate(CreateView):
+  model =  Rocket
+  fields = '__all__'
 
 
-# Define the home view
 def home(request):
   return render(request, 'home.html')
 
