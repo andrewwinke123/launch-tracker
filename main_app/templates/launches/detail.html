@@ -23,6 +23,10 @@
       <h2>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h2>
       <h2>Orbit: {{ launch.ordbit }}</h2>
     <p>{{ launch.description }}</p>
+    <div class="launch-actions">
+      <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
+    </div>
   </div>
 </section>
 

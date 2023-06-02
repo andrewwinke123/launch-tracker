@@ -1,7 +1,5 @@
 from django.db import models
-
-
-from django.db import models
+from django.urls import reverse
 
 class Launch(models.Model):
   mission = models.CharField(max_length=50)
@@ -16,3 +14,6 @@ class Launch(models.Model):
 
   def __str__(self):
     return self.mission
+  
+  def get_absolute_url(self):
+    return reverse('launch-detail', kwargs={'launch_id': self.id})

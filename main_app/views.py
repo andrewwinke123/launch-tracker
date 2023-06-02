@@ -7,6 +7,11 @@ class LaunchCreate(CreateView):
   model =  Launch
   fields = '__all__'
 
+class LaunchCreate(CreateView):
+  model = Launch
+  fields = '__all__'
+  success_url = '/launches/'
+
 
 def home(request):
   return render(request, 'home.html')
