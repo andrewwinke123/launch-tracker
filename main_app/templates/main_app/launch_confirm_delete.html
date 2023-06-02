@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Delete Launch?</h1>
+  <img src="{% static 'images/spinning-globe.svg' %}" alt="Loading"/>
+</div>
+<h2>Are you sure you want to delete {{ cat.name }}?</h2>
+
+<form action="" method="post" class="form">
+  {% csrf_token %}
+  <a 
+    href="{% url 'launch-detail' launch.id %}" 
+    class="btn secondary"
+  >
+    Cancel
+  </a>
+  <button type="submit" class="btn danger">Yes - Delete!</button>
+</form>
+
+{% endblock %}
