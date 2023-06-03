@@ -40,9 +40,10 @@
     >
   </div>
   <div class="launch-details">
-    <h1>{{ launch.model }}</h1>
-      <h2>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h2>
-      <h2>Orbit: {{ launch.ordbit }}</h2>
+    <h1>{{ launch.mission|upper }}</h1>
+    <h2>{{ launch.model|title }} Rocket</h2>
+      <h3>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h3>
+      <h3>Orbit: {{ launch.ordbit }}</h3>
     <p>{{ launch.description }}</p>
     <div class="launch-actions">
       <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
