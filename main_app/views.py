@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Launch
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Launch
+from .forms import ScheduleForm
 
 class LaunchCreate(CreateView):
   model =  Launch
@@ -11,7 +12,6 @@ class LaunchCreate(CreateView):
   model = Launch
   fields = '__all__'
   success_url = '/launches/'
-
 
 def home(request):
   return render(request, 'home.html')
@@ -25,7 +25,24 @@ def launch_index(request):
 
 def launch_detail(request, launch_id):
   launch = Launch.objects.get(id=launch_id)
-  return render(request, 'launches/detail.html', { 'launch': launch })
+  schedule_form = ScheduleForm()
+  return render(request, 'launches/detail.html', { 'launch': launch, 'schedule_form': schedule_form })
+
+def add_schedule(request, launch_id):
+  form = ScheduleForm(request.POST)
+  if form.is_valid():
+    new_schedule = form.save(commit=False)
+    new_schedule.launch_id = launch_id
+    new_schedule.save()
+  return redirect('launch-detail', launch_id=launch_id)
+
+def add_schedule(request, launch_id):
+  form = ScheduleForm(request.POST)
+  if form.is_valid():
+    new_schedule = form.save(commit=False)
+    new_schedule.launch_id = launch_id
+    new_schedule.save()
+  return redirect('launch-detail', launch_id=launch_id)
 
 class LaunchUpdate(UpdateView):
   model = Launch

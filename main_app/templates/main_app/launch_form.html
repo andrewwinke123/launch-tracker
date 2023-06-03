@@ -12,14 +12,26 @@
 <div class="page-header">
   <h1>Add a Launch</h1>
 {% endif %}
-  <img src="{% static 'images/grounded.svg' %}" alt="Launch-Ready"/>
   </div>
-  <form action="" method="post" class="form-container">
+  <form action="" method="post" class="form-container" id="launch-form">
     {% csrf_token %}
     <table>
       {{ form.as_table }}
     </table>
     <button type="submit" class="btn submit">Submit!</button>
+    {% if submitted %}
+        <img class="rocket-launch" src="{% static 'images/launch-tracker-animation-once.gif' %}" alt="Grounded"/>
+    {% else %}
+        <img class="rocket-launch" src="{% static 'images/grounded.svg' %}" alt="Launch-Ready"/>
+    {% endif %}
   </form>
 
+
+  <script>
+    document.getElementById("submit-btn").addEventListener("click", function() {
+      setTimeout(function() {
+        document.getElementById("launch-form").submit();
+      }, 5000);
+    });
+  </script>
 {% endblock %}

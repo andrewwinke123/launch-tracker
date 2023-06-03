@@ -1,7 +1,17 @@
 .form-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  display: relative;
+  position: relative;
+  max-width: 500px;
+  margin:0 auto;
+}
+
+.rocket-launch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  max-width: 100%;
+  height: auto;
 }
 
 table {

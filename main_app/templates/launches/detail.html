@@ -3,17 +3,38 @@
 
 {% block head %}
 <link 
+  href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" 
+  rel="stylesheet" 
+/>
+<link rel="stylesheet" href="{% static 'css/mcdp.css' %}">
+<script 
+  src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"
+>
+</script>
+<link 
   rel="stylesheet" 
   type="text/css" 
   href="{% static 'css/launches/launch-detail.css' %}"
 />
+<script defer src="{% static 'js/launch-detail.js' %}"></script>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const launchImage = document.getElementById('launchImage');
+    launchImage.addEventListener('click', () => {
+      launchImage.src = '{% static 'images/launch-tracker-animation-once.gif' %}';
+    });
+  });
+  </script>
+  
 {% endblock %}
 
 {% block content %}
 
+<div class="container">
 <section class="launch-container">
   <div class="launch-img">
     <img 
+      id="launchImage"
       src="{% static 'images/grounded.svg' %}" 
       alt="load"
     >
@@ -29,5 +50,58 @@
     </div>
   </div>
 </section>
-
+<div class="schedule-satellite-container">
+</div>
+<div class="schedule-satellite-container">
+<section class="schedule">
+  <div class="subsection-title">
+    <h2>Schedule</h2>
+    <img 
+      src="{% static 'images/wire-frame-spinning-globe.gif' %}" 
+      alt="load"
+    />
+    <img 
+      src="{% static 'images/wire-frame-spinning-globe.gif' %}"
+      alt="load"
+    />
+    <img 
+      src="{% static 'images/wire-frame-spinning-globe.gif' %}" 
+      alt="load"
+    />
+  </div>
+  <h3>Re-schedule the Launch</h3>
+    <form
+      action="{% url 'add-schedule' launch.id %}" 
+      method="post" 
+      class="subsection-content"
+      autocomplete="off"
+    >
+      {% csrf_token %}
+      {{ schedule_form.as_p }}
+      <button type="submit" class="btn submit">Re-schedule the launch</button>
+    </form>
+    <h3>Past Schedule</h3>
+    {% if launch.schedule_set.all.count %}
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Schedule</th></tr>
+        </thead>
+        <tbody>
+          {% for schedule in launch.schedule_set.all %}
+            <tr>
+              <td>{{schedule.date}}</td>
+              <td>{{schedule.get_schedule_display}}</td>
+            </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+			<div class="subsection-content">
+        <p>{{launch.name}} has never been launched 😔</p>
+      </div>
+    {% endif %}
+</section>
+</div>
+</div>
+</div>
 {% endblock %}

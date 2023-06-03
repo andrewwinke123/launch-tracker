@@ -11,10 +11,9 @@
   <div class="Launch-container">
     <img src="{% static 'images/' %}" alt="The Launch Tracker logo" />
   </div>
-  <img 
-    src="{% static 'images/spinning-globe.gif' %}" 
-    alt="Text reads: Launch Tracker"
-  />
+  <a href="{% url 'launch-index' %}">
+    <img src="{% static 'images/spinning-globe.gif' %}" alt="Text reads: Launch Tracker" />
+  </a>
 </section>
 
 {% endblock %}
