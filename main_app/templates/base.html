@@ -28,11 +28,18 @@
     </div>
     <nav>
       <ul>
-        <li><a href="/launches">All Launches</a></li>
-        <li><a href="{% url 'satellite-index' %}">All Satellites</a></li>
-        <li><a href="{% url 'launch-create' %}">Add a Launch</a></li>
-        <li><a href="{% url 'satellite-create' %}">Add Satellite</S></a></li>
-        <li><a href="/about">About 🚀</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="/launches">All Launches</a></li>
+          <li><a href="{% url 'satellite-index' %}">All Satellites</a></li>
+          <li><a href="{% url 'launch-create' %}">Add a Launch</a></li>
+          <li><a href="{% url 'satellite-create' %}">Add Satellite</S></a></li>
+          <li><a href="{% url 'about' %}">About 🚀</S></a></li>
+          <li><a href="{% url 'logout' %}">Logout</S></a></li>
+        {% else %}
+          <li><a href="{% url 'about' %}">About 🚀</S></a></li>
+          <li><a href="{% url 'home' %}">Login</S></a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>

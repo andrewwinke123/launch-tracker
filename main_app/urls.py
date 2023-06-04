@@ -16,5 +16,6 @@ urlpatterns = [
   path('satellitess/<int:pk>/update/', views.SatelliteUpdate.as_view(), name='satellite-update'),
   path('satellitess/<int:pk>/delete/', views.SatelliteDelete.as_view(), name='satellite-delete'),
   path('', views.Home.as_view(), name='home'),
-  
+  path('accounts/signup/', views.signup, name='signup'),
+  path('logout/', views.logout_view, name='logout'),
 ]

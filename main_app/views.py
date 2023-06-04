@@ -3,11 +3,17 @@ from .models import Launch, Satellite
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from .forms import ScheduleForm
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
-class LaunchCreate(CreateView):
-  model =  Launch
-  fields = '__all__'
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
 
 def home(request):
   return render(request, 'home.html')
@@ -46,6 +52,13 @@ class LaunchUpdate(UpdateView):
   'date'
   ]
 
+class LaunchCreate(CreateView):
+  model =  Launch
+  fields = '__all__'
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
+
 class LaunchDelete(DeleteView):
   model = Launch
   success_url = '/launches/'
@@ -70,3 +83,17 @@ class SatelliteDelete(DeleteView):
 
 class Home(LoginView):
   template_name = 'home.html'
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user)
+      return redirect('launch-index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'signup.html', context)
