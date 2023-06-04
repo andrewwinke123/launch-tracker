@@ -10,4 +10,11 @@ urlpatterns = [
   path('launches/<int:pk>/update/', views.LaunchUpdate.as_view(), name='launch-update'),
   path('launches/<int:pk>/delete/', views.LaunchDelete.as_view(), name='launch-delete'),
   path('launches/<int:launch_id>/add-schedule/', views.add_schedule, name='add-schedule'),
+  path('satellites/create/', views.SatelliteCreate.as_view(), name='satellite-create'),
+  path('satellites/<int:pk>/', views.SatelliteDetail.as_view(), name='satellite-detail'),
+  path('satellites/', views.SatelliteList.as_view(), name='satellite-index'),
+  path('satellitess/<int:pk>/update/', views.SatelliteUpdate.as_view(), name='satellite-update'),
+  path('satellitess/<int:pk>/delete/', views.SatelliteDelete.as_view(), name='satellite-delete'),
+  path('', views.Home.as_view(), name='home'),
+  
 ]

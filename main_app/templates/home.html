@@ -9,11 +9,19 @@
 
 <section class="logo-container">
   <div class="Launch-container">
-    <img src="{% static 'images/' %}" alt="The Launch Tracker logo" />
+    <img src="{% static 'images/launch-tracker.png' %}" alt="The Launch Tracker logo" />
   </div>
   <a href="{% url 'launch-index' %}">
     <img src="{% static 'images/spinning-globe.gif' %}" alt="Text reads: Launch Tracker" />
   </a>
 </section>
-
+<section>
+  <form action="{% url 'home' %}" method="post" class="login">
+    <h1>Login</h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn submit">Login</button>
+  </form>
+</section>
 {% endblock %}

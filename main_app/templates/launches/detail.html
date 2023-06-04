@@ -52,8 +52,6 @@
   </div>
 </section>
 <div class="schedule-satellite-container">
-</div>
-<div class="schedule-satellite-container">
 <section class="schedule">
   <div class="subsection-title">
     <h2>Schedule</h2>
@@ -77,6 +75,11 @@
       class="subsection-content"
       autocomplete="off"
     >
+    {% if launch.schedule_set %}
+        <p class="launched">{{launch.mission}} has been launched! 🚀</p>
+      {% else %}
+        <p class="unlaunched">{{launch.mission}} has not launched yet. 😔</p>
+      {% endif %}
       {% csrf_token %}
       {{ schedule_form.as_p }}
       <button type="submit" class="btn submit">Re-schedule the launch</button>
@@ -102,6 +105,32 @@
       </div>
     {% endif %}
 </section>
+  <section class="satellites">
+    <div class="subsection-title">
+      <h2>Satellites</h2>
+      <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
+      <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
+      <img src="{% static 'images/fish.svg' %}" alt="A fishy satellite" />
+    </div>
+    <h3>{{ launch.name }}Satellites</h3>
+    <div class="subsection-content">
+      {% if launch.satellites.count %}
+        {% for satellite in launch.satellites.all %}
+          <div class="satellite-container">
+            <div 
+              class="color-block"
+              style="background-color: {{ satellite.color }}"
+            ></div>
+            <a href="{% url 'satellite-detail' satellite.id %}">
+              <p>A {{ satellite.company }} {{ satellite.name }}</p>
+              <p> {{ satellite.description }} </p>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="no-satellites">{{launch.name}} doesn't have any Satellites 😞</p>
+      {% endif %}
+    </div>
 </div>
 </div>
 </div>

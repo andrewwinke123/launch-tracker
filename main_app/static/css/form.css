@@ -14,6 +14,15 @@
   height: auto;
 }
 
+.satellite-launch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  max-width: 100%;
+  height: auto;
+}
+
 table {
   padding: 0 40px;
   width: 100%;

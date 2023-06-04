@@ -221,16 +221,6 @@
     margin-right: 25px;
   }
 
-  .schedule-satellite-container {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
-  }
-
-  .schedule-satellite-container > section {
-    width: 45%;
-  }
-
   .launch-container {
     width: 400px;
   }

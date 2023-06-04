@@ -12,7 +12,7 @@
 {% block content %}
 
 <section class="page-header">
-  <h1>Luanch List</h1>
+  <h1>Launch List</h1>
   <img src="{% static 'images/launching.svg' %}" alt="load" />
   <img src="{% static 'images/launching.svg' %}" alt="load" />
   <img src="{% static 'images/launching.svg' %}" alt="load" />
@@ -30,8 +30,8 @@
             alt="load"
           >
         </div>
-        <h2 class="card-title">{{ launch.model }}</h2>
-        <p>A {{ launch.size }} lift {{ launch.mfg }} Launch</p>
+        <h2 class="card-title">{{ launch.mission|upper }}</h2>
+        <p>{{ launch.model|capfirst }} Rocket</p>
         <p><small>Orbit: {{ launch.orbit }}</small></p>
         <p><small>{{ launch.description }}</small></p>
       </div>
