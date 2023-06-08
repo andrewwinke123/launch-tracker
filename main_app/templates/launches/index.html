@@ -35,7 +35,7 @@
           {% else %}
             <img 
               id="launch-img-{{ launch.id }}"
-              src="{% static 'images/launching.svg' %}" 
+              src="{% static 'images/cropped-grounded.jpg' %}" 
               alt="load"
             >
           {% endif %}
@@ -45,11 +45,6 @@
       <p>{{ launch.model|capfirst }} Rocket</p>
       <p><small>Orbit: {{ launch.orbit }}</small></p>
       <p><small>{{ launch.description }}</small></p>
-      <a href="{% url 'launch-detail' launch.id %}" 
-          class="card-link" 
-          data-launch-id="{{ launch.id }}">
-          Learn More
-      </a>
     </div>
   </div>
   {% endfor %}
@@ -58,15 +53,15 @@
 <script>
   document.querySelectorAll('.card-trigger').forEach(trigger => {
     trigger.addEventListener('click', function(e) {
-      e.preventDefault(); // prevent navigating immediately
-      var launchId = this.dataset.launchId; // get the launch id
-      var img = document.getElementById('launch-img-' + launchId); // find the image
-      img.src = "{% static 'images/launch-tracker-animation-once.gif' %}"; // switch the image src
+      e.preventDefault()
+      var launchId = this.dataset.launchId
+      var img = document.getElementById('launch-img-' + launchId)
+      img.src = "{% static 'images/cropped-launch-tracker-animation.gif' %}"
       setTimeout(function() {
-        window.location.href = trigger.href; // navigate to the href after 4 seconds
-      }, 4000);
-    });
-  });
+        window.location.href = trigger.href
+      }, 3500)
+    })
+  })
 </script>
 
 

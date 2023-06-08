@@ -170,6 +170,20 @@ nav li {
     align-items: center;
   }
 
+  .grounded-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 25%; 
+    width: 25%; 
+  }
+  
+  .grounded-container img {
+    width: 100%;
+    height: auto;
+  }
+  
+
   main {
     max-width: 1300px;
     min-height: calc(100vh - 53px);
@@ -236,6 +250,19 @@ nav li {
     border-bottom: none;
   }
 
+  .grounded-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: 25%; 
+    width: 25%; 
+  }
+  
+  .grounded-container img {
+    width: 100%;
+    height: auto;
+  }
+
   nav,
   .header-logo-container {
     margin: 0;
@@ -267,5 +294,24 @@ nav li {
       -webkit-backdrop-filter: blur(3px);
       backdrop-filter: blur(3px);
     }
+  }
+}
+
+.grounded-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 25%; 
+  width: 25%; 
+}
+
+.grounded-container img {
+  width: 100%;
+  height: auto;
+}
+
+@media only screen and (max-width: 900px) {
+  .grounded-container {
+    display: none !important;
   }
 }
