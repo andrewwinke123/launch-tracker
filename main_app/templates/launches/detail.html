@@ -33,11 +33,19 @@
 <div class="container">
 <section class="launch-container">
   <div class="launch-img">
-    <img 
-      id="launchImage"
-      src="{% static 'images/grounded.svg' %}" 
-      alt="load"
-    >
+    {% if launch.photo.url %}
+      <img 
+        src="{{launch.photo.url}}" 
+        alt="A photo of {{launch.name}}"
+        class="usr-img"
+      >
+    {% else %}
+      <img 
+        id="launchImage"
+        src="{% static 'images/grounded.svg' %}" 
+        alt="load"
+      >
+    {% endif %}
   </div>
   <div class="launch-details">
     <h1>{{ launch.mission|upper }}</h1>
@@ -48,6 +56,20 @@
     <div class="launch-actions">
       <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
       <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
+      <h3>Change {{ launch.name }}'s photo</h3>
+      <p id="file-name"></p>
+      <form 
+        action="{% url 'add-photo' launch.id %}"
+        enctype="multipart/form-data"
+        method="POST"
+      >
+        {% csrf_token %}
+        <label class="btn secondary">
+          Choose photo
+          <input type="file" name="photo-file" id="file-input">
+        </label>
+        <button type="submit" class="btn submit">Upload Photo</button>
+      </form>
     </div>
   </div>
 </section>

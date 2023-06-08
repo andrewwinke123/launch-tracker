@@ -28,11 +28,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'launch-tracker.fly.dev']
 CSRF_TRUSTED_ORIGINS = ['https://launch-tracker.fly.dev']
-
-# Application definition
 
 INSTALLED_APPS = [
     'main_app',
