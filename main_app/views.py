@@ -8,9 +8,11 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import ScheduleForm
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Launch, Satellite, Photo
+from django.core import serializers
 import uuid
 import boto3
 
@@ -28,8 +30,17 @@ def about(request):
   return render(request, 'about.html')
 
 def launch_index(request):
-  launches = Launch.objects.all()
-  return render(request, 'launches/index.html', { 'launches': launches })
+    launches = Launch.objects.all()
+    events = []
+    for launch in launches:
+        events.append({
+            'title': launch.mission,
+            'start': str(launch.date),
+            'end': str(launch.date),
+            'url': reverse('launch-detail', kwargs={'launch_id': launch.id})
+        })
+    return render(request, 'launches/index.html', {'launches': launches, 'events': events})
+
 
 def launch_detail(request, launch_id):
   launch = Launch.objects.get(id=launch_id)

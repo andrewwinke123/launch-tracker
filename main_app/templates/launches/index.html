@@ -2,6 +2,12 @@
 {% load static %}
 
 {% block head %}
+<head>
+  <link href="https://unpkg.com/fullcalendar@5/main.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/fullcalendar@5/main.min.js"></script>
+</head>
+
+  
 <link 
   rel="stylesheet"
   type="text/css"
@@ -50,22 +56,41 @@
   {% endfor %}
   
 
-<script>
-  document.querySelectorAll('.card-trigger').forEach(trigger => {
-    trigger.addEventListener('click', function(e) {
-      e.preventDefault()
-      var launchId = this.dataset.launchId
-      var img = document.getElementById('launch-img-' + launchId)
-      img.src = "{% static 'images/cropped-launch-tracker-animation.gif' %}"
-      setTimeout(function() {
-        window.location.href = trigger.href
-      }, 3500)
+  <script>
+    document.querySelectorAll('.card-trigger').forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault()
+        var launchId = this.dataset.launchId
+        var img = document.getElementById('launch-img-' + launchId)
+        img.src = "{% static 'images/cropped-launch-tracker-animation.gif' %}"
+        setTimeout(function() {
+          window.location.href = trigger.href
+        }, 3500)
+      })
     })
-  })
-</script>
-
-
-
-</section>
+  </script>
+  
+  
+  <section class="calendar-container">
+    <div id='calendar'></div>
+  </section>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar')
+    
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+      });
+    
+      calendar.render()
+    })
+    
+  </script>
+  
+  
+  
+  
+  </section>
 
 {% endblock %}
