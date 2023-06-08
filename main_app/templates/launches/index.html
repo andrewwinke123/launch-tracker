@@ -25,6 +25,44 @@
   <img src="{% static 'images/launching.svg' %}" alt="load" />
 </section>
 
+<section class="calendar-container">
+  <div id='calendar'></div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar')
+    
+    var launchesData = JSON.parse('{{ launches_data|escapejs }}')
+  
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: launchesData,
+      eventContent: function(arg) {
+        var imgUrl = arg.event.extendedProps.photo_url;
+        var title = arg.event.title;
+    
+        var containerHtml = `
+            <div style="position: relative;">
+                <img src="${imgUrl}" style="height: 100px; width: 100%;">
+                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold;">${title}</span>
+            </div>
+        `;
+    
+        return { html: containerHtml };
+    },
+    
+      eventClick: function(info) {
+        var eventProps = info.event.extendedProps;
+        window.location.href = eventProps.detail_url;
+      }
+    });
+    
+  
+    calendar.render()
+  })
+  </script>
+
 <section class="card-container">
   {% for launch in launches %}
   <div class="card">
@@ -70,23 +108,6 @@
     })
   </script>
   
-  
-  <section class="calendar-container">
-    <div id='calendar'></div>
-  </section>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar')
-    
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth'
-      });
-    
-      calendar.render()
-    })
-    
-  </script>
   
   
   

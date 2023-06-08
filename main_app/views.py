@@ -13,8 +13,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Launch, Satellite, Photo
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
 import uuid
 import boto3
+import json
+
 
 S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
 BUCKET = 'launchtrackerbucket'
@@ -31,15 +34,36 @@ def about(request):
 
 def launch_index(request):
     launches = Launch.objects.all()
-    events = []
-    for launch in launches:
-        events.append({
+    launches_data = [
+        {
             'title': launch.mission,
-            'start': str(launch.date),
-            'end': str(launch.date),
-            'url': reverse('launch-detail', kwargs={'launch_id': launch.id})
-        })
-    return render(request, 'launches/index.html', {'launches': launches, 'events': events})
+            'start': launch.date.isoformat(),
+            'extendedProps': {
+                'mission': launch.mission,
+                'model': launch.model,
+                'mfg': launch.mfg,
+                'size': launch.size,
+                'orbit': launch.orbit,
+                'crew': launch.crew,
+                'payload': launch.payload,
+                'location': launch.location,
+                'photo_url': None,
+                'detail_url': reverse('launch-detail', kwargs={'launch_id': launch.id})
+            }
+        } 
+        for launch in launches
+    ]
+
+    for data in launches_data:
+      try:
+          launch = Launch.objects.get(mission=data['title'], date=data['start'])
+          data['extendedProps']['photo_url'] = launch.photo.url
+      except ObjectDoesNotExist:
+          pass 
+
+          return render(request, 'launches/index.html', {'launches': launches, 'launches_data': json.dumps(launches_data)})
+
+
 
 
 def launch_detail(request, launch_id):
