@@ -35,7 +35,7 @@ def about(request):
   return render(request, 'about.html')
 
 def launch_index(request):
-    launches = Launch.objects.all().order_by('-id')  # Retrieve launches in descending order of ID (newest first)
+    launches = Launch.objects.all().order_by('-id')
     launches_data = [
         {
             'title': launch.mission,
@@ -64,10 +64,6 @@ def launch_index(request):
             pass 
 
     return render(request, 'launches/index.html', {'launches': launches, 'launches_data': json.dumps(launches_data)})
-
-
-
-
 
 def launch_detail(request, launch_id):
   launch = Launch.objects.get(id=launch_id)
@@ -114,18 +110,15 @@ class LaunchCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.save()  # Save the Launch instance to the database
-        form.instance.satellites.clear()  # Clear any previously associated satellites
+        form.save()
+        form.instance.satellites.clear()
         return super().form_valid(form)
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         if 'user' in form.fields:
-            form.fields['user'].widget = forms.HiddenInput()  # Hide the user field in the form
+            form.fields['user'].widget = forms.HiddenInput() 
         return form
-
-
-
 
 def assoc_satellite(request, launch_id, satellite_id):
     launch = Launch.objects.get(id=launch_id)

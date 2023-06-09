@@ -31,19 +31,23 @@
 {% block content %}
 
 <div class="container">
-<section class="launch-container">
-  <div class="launch-details">
-    <h1>{{ launch.mission|upper }}</h1>
-    <h2>{{ launch.model|title }} Rocket</h2>
-    <h3>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h3>
-    <h3>Orbit: {{ launch.ordbit }}</h3>
-    <p>{{ launch.description }}</p>
-    <div class="launch-actions">
-      <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
-      <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
-    
+  <section class="launch-container">
+    <div class="launch-details">
+      <h1>{{ launch.mission|upper }}</h1>
+      <h2>{{ launch.model|title }} Rocket</h2>
+      <h3>Orbit: {{ launch.orbit }}</h3>
+      <h3>Carrying: {{ launch.payload }}</h3>
+      {% if launch.crew > 0 %}
+        <h3>Crew: {{ launch.crew }}</h3>
+      {% endif %}
+      <p>{{ launch.mfg }}</p>
+      <p>Launch Location: {{ launch.location }}</p>
+      <p>Launch on {{ launch.date }}</p>
+      <div class="launch-actions">
+        <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
+        <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
+      </div>
     </div>
-  </div>
   <div class="launch-img">
     {% if launch.photo.url %}
       <img 
@@ -90,19 +94,19 @@
       autocomplete="off"
     >
     {% if launch.schedule_set %}
-        <p class="launched">{{launch.mission}} has been launched! 🚀</p>
+        <p class="launched">{{launch.mission}} has not scrubbed yet. 🚀</p>
       {% else %}
-        <p class="unlaunched">{{launch.mission}} has not launched yet. 😔</p>
+        <p class="unlaunched">{{launch.mission}} has been been scrubbed! 😔</p>
       {% endif %}
       {% csrf_token %}
       {{ schedule_form.as_p }}
-      <button type="submit" class="btn submit">Re-schedule the launch</button>
+      <button type="submit" class="btn submit">Scrub the Launch</button>
     </form>
-    <h3>Past Schedule</h3>
+    <h3>Past Scrubs</h3>
     {% if launch.schedule_set.all.count %}
       <table>
         <thead>
-          <tr><th>Date</th><th>Schedule</th></tr>
+          <tr><th>Date</th><th>Rough Time</th></tr>
         </thead>
         <tbody>
           {% for schedule in launch.schedule_set.all %}
@@ -115,7 +119,7 @@
   </table>
   {% else %}
 			<div class="subsection-content">
-        <p>{{launch.name}} has never been launched 😔</p>
+        <p>{{launch.name}} has not been scrubbed yet</p>
       </div>
     {% endif %}
 </section>
