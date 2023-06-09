@@ -20,10 +20,20 @@
   <header>
     <div class="grounded-container">
       <a href="/">
+        {% if request.path == "/" %}
         <img 
-          src="{% static 'images/launch-tracker-logo.svg' %}"
-          alt="The Launch Tracker Logo"
+        src="{% static 'images/launch-tracker-logo.svg' %}"
+        alt="The Launch Tracker Logo"
         >
+        {% else %}
+        <div class="globe-container">
+          <img 
+            src="{% static 'images/spinnign-globe-small.svg' %}"
+            alt="The Spinning Globe"
+            class="logo-image"
+          >
+        </div>
+          {% endif %}
       </a>
     </div>
     <nav>

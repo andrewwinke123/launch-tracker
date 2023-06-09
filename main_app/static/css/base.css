@@ -287,3 +287,13 @@ nav li {
     display: none !important;
   }
 }
+
+.globe-container img {
+  width: 35px; /* Change this value based on your requirement */
+  height: auto;
+}
+
+.logo-image {
+  width: 50px; /* Change this value based on your requirement */
+  height: auto;
+}
