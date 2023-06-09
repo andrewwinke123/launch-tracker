@@ -3,112 +3,103 @@
 
 {% block head %}
 <head>
-  <link href="https://unpkg.com/fullcalendar@5/main.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/fullcalendar@5/main.min.js"></script>
+	<link href="https://unpkg.com/fullcalendar@5/main.min.css" rel="stylesheet" />
+	<script src="https://unpkg.com/fullcalendar@5/main.min.js"></script>
 </head>
 
 <link 
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'css/launches/launch-index.css' %}"
+	rel="stylesheet"
+	type="text/css"
+	href="{% static 'css/launches/launch-index.css' %}"
 />
 {% endblock %}
 
 {% block content %}
 
 <section class="page-header">
-  <h1>Launch List</h1>
-  <a href="#calendar-container" class="go-to-calendar">Go to Calendar</a>
+	<h1>Launch List</h1>
+	<a href="#calendar-container" class="go-to-calendar">Go to Calendar</a>
 </section>
-
 
 <section class="card-container">
-  {% for launch in launches %}
-  <div class="card">
-    <div class="card-content">
-      <div class="card-img-container">
-        <a href="{% url 'launch-detail' launch.id %}" class="card-trigger" data-launch-id="{{ launch.id }}">
-          {% if launch.photo.url %}
-            <img 
-              id="launch-img-{{ launch.id }}"
-              src="{{launch.photo.url}}" 
-              alt="A photo of {{launch.name}}"
-              class="usr-img"
-            >
-          {% else %}
-            <img 
-              id="launch-img-{{ launch.id }}"
-              src="{% static 'images/grounded-small.jpg' %}" 
-              alt="load"
-            >
-          {% endif %}
-        </a>
-      </div>
-      <h2 class="card-title">{{ launch.mission|upper }}</h2>
-      <p>{{ launch.model|capfirst }} Rocket</p>
-      <p><small>Orbit: {{ launch.orbit }}</small></p>
-      <p><small>{{ launch.description }}</small></p>
-    </div>
-  </div>
-  {% endfor %}
-  
-  
-  <script>
-    document.querySelectorAll('.card-trigger').forEach(trigger => {
-      trigger.addEventListener('click', function(e) {
-        e.preventDefault()
-        var launchId = this.dataset.launchId
-        var img = document.getElementById('launch-img-' + launchId)
-        img.src = "{% static 'images/launch-tracker-animation-small.gif' %}"
-        setTimeout(function() {
-          window.location.href = trigger.href
-        }, 3500)
-      })
-    })
-  </script>
-  
-  
-  
-  
-  
+	{% for launch in launches %}
+	<div class="card">
+		<div class="card-content">
+			<div class="card-img-container">
+				<a href="{% url 'launch-detail' launch.id %}" class="card-trigger" data-launch-id="{{ launch.id }}">
+				{% if launch.photo.url %}
+					<img 
+						id="launch-img-{{ launch.id }}"
+						src="{{launch.photo.url}}" 
+						alt="A photo of {{launch.name}}"
+						class="usr-img"
+					>
+				{% else %}
+					<img 
+						id="launch-img-{{ launch.id }}"
+						src="{% static 'images/cropped-grounded.jpg' %}" 
+						alt="load"
+					>
+				{% endif %}
+				</a>
+			</div>
+			<h2 class="card-title">{{ launch.mission|upper }}</h2>
+			<p>{{ launch.model|capfirst }} Rocket</p>
+			<p><small>Orbit: {{ launch.orbit }}</small></p>
+			<p><small>{{ launch.description }}</small></p>
+		</div>
+	</div>
+	{% endfor %}
+
+	<script>
+	document.querySelectorAll('.card-trigger').forEach(trigger => {
+		trigger.addEventListener('click', function(e) {
+			e.preventDefault()
+			var launchId = this.dataset.launchId
+			var img = document.getElementById('launch-img-' + launchId)
+			img.src = "{% static 'images/cropped-launch-tracker-animation.gif' %}"
+			setTimeout(function() {
+				window.location.href = trigger.href
+			}, 3500)
+		})
+	})
+	</script>
 </section>
 <section class="calendar-container" id="calendar-container">
-  <div id='calendar'></div>
+	<div id='calendar'></div>
 </section>
 
-
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar')
-    
-    var launchesData = JSON.parse('{{ launches_data|escapejs }}')
-  
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      events: launchesData,
-      eventContent: function(arg) {
-        var imgUrl = arg.event.extendedProps.photo_url;
-        var title = arg.event.title;
-    
-        var containerHtml = `
-            <div class="event-content">
-                <img src="${imgUrl}">
-                <span>${title}</span>
-            </div>
-        `;
-    
-        return { html: containerHtml };
-      },
-    
-      eventClick: function(info) {
-        var eventProps = info.event.extendedProps;
-        window.location.href = eventProps.detail_url;
-      }
-    });
-    
-  
-    calendar.render()
-  })
+document.addEventListener('DOMContentLoaded', function() {
+	var calendarEl = document.getElementById('calendar')
+	
+	var launchesData = JSON.parse('{{ launches_data|escapejs }}')
+	
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		events: launchesData,
+		eventContent: function(arg) {
+			var imgUrl = arg.event.extendedProps.photo_url;
+			var title = arg.event.title;
+			
+			var containerHtml = `
+				<div class="event-content">
+					<img src="${imgUrl}">
+					<span>${title}</span>
+				</div>
+			`;
+			
+			return { html: containerHtml };
+		},
+		
+		eventClick: function(info) {
+			var eventProps = info.event.extendedProps;
+			window.location.href = eventProps.detail_url;
+		}
+	});
+	
+	calendar.render()
+})
 </script>
 
 {% endblock %}

@@ -3,59 +3,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link
-    rel="shortcut icon"
-    type="image/png"
-    href="{% static 'images/wire-freame-spinning-globe.png' %}"
-  >
-  <title>Launch Tracker</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-  {% block head %}
-  {% endblock %}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link
+		rel="shortcut icon"
+		type="image/png"
+		href="{% static 'images/wire-freame-spinning-globe.png' %}"
+	>
+	<title>Launch Tracker</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	{% block head %}
+	{% endblock %}
 </head>
 <body>
-  <header>
-    <div class="grounded-container">
-      <a href="/">
-        {% if request.path == "/" %}
-        <img 
-        src="{% static 'images/launch-tracker-logo.svg' %}"
-        alt="The Launch Tracker Logo"
-        >
-        {% else %}
-        <div class="globe-container">
-          <img 
-            src="{% static 'images/spinnign-globe-small.svg' %}"
-            alt="The Spinning Globe"
-            class="logo-image"
-          >
-        </div>
-          {% endif %}
-      </a>
-    </div>
-    <nav>
-      <ul>
-        {% if user.is_authenticated %}
-          <li><a href="/launches">All Launches</a></li>
-          <li><a href="{% url 'satellite-index' %}">All Satellites</a></li>
-          <li><a href="{% url 'launch-create' %}">Add a Launch</a></li>
-          <li><a href="{% url 'satellite-create' %}">Add Satellite</S></a></li>
-          <li><a href="{% url 'about' %}">About 🚀</S></a></li>
-          <li><a href="{% url 'logout' %}">Logout</S></a></li>
-        {% else %}
-          <li><a href="{% url 'about' %}">About 🚀</S></a></li>
-          <li><a href="{% url 'home' %}">Login</S></a></li>
-          <li><a href="{% url 'signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+	<header>
+		<div class="grounded-container">
+			<a href="/">
+			{% if request.path == "/" %}
+				<img 
+					src="{% static 'images/launch-tracker-logo.svg' %}"
+					alt="The Launch Tracker Logo"
+				>
+			{% else %}
+				<div class="globe-container">
+					<img 
+						src="{% static 'images/spinnign-globe-small.svg' %}"
+						alt="The Spinning Globe"
+						class="logo-image"
+					>
+				</div>
+			{% endif %}
+			</a>
+		</div>
+		<nav>
+			<ul>
+			{% if user.is_authenticated %}
+				<li><a href="/launches">All Launches</a></li>
+				<li><a href="{% url 'satellite-index' %}">All Satellites</a></li>
+				<li><a href="{% url 'launch-create' %}">Add a Launch</a></li>
+				<li><a href="{% url 'satellite-create' %}">Add Satellite</S></a></li>
+				<li><a href="{% url 'about' %}">About 🚀</S></a></li>
+				<li><a href="{% url 'logout' %}">Logout</S></a></li>
+			{% else %}
+				<li><a href="{% url 'about' %}">About 🚀</S></a></li>
+				<li><a href="{% url 'home' %}">Login</S></a></li>
+				<li><a href="{% url 'signup' %}">Sign Up</a></li>
+			{% endif %}
+			</ul>
+		</nav>
+	</header>
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
 </body>
 </html>

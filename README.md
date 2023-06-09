@@ -5,7 +5,6 @@ Welcome to the Launch Tracker! This website is dedicated to cataloging rocket la
 
 
 ![Launch-shot1](https://github.com/andrewwinke123/launch-tracker/assets/127761364/cc89b3a0-603e-4565-9e55-4dfa6219182b)
-![Rocket Payloads]()
 
 
 
