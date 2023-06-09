@@ -32,6 +32,18 @@
 
 <div class="container">
 <section class="launch-container">
+  <div class="launch-details">
+    <h1>{{ launch.mission|upper }}</h1>
+    <h2>{{ launch.model|title }} Rocket</h2>
+    <h3>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h3>
+    <h3>Orbit: {{ launch.ordbit }}</h3>
+    <p>{{ launch.description }}</p>
+    <div class="launch-actions">
+      <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
+    
+    </div>
+  </div>
   <div class="launch-img">
     {% if launch.photo.url %}
       <img 
@@ -39,37 +51,17 @@
         alt="A photo of {{launch.name}}"
         class="usr-img"
       >
+    </div>
     {% else %}
+    <div class="launch-img">
       <img 
         id="launchImage"
         src="{% static 'images/grounded.svg' %}" 
         alt="load"
       >
+    </div>
     {% endif %}
   </div>
-  <div class="launch-details">
-    <h1>{{ launch.mission|upper }}</h1>
-    <h2>{{ launch.model|title }} Rocket</h2>
-      <h3>A {{ launch.size }} lift launch, by {{ launch.mfg }}</h3>
-      <h3>Orbit: {{ launch.ordbit }}</h3>
-    <p>{{ launch.description }}</p>
-    <div class="launch-actions">
-      <a href="{% url 'launch-update' launch.id %}" class="btn warn">Edit</a>
-      <a href="{% url 'launch-delete' launch.id %}" class="btn danger">Delete</a>
-      <h3>Change {{ launch.name }}'s photo</h3>
-      <p id="file-name"></p>
-      <form 
-        action="{% url 'add-photo' launch.id %}"
-        enctype="multipart/form-data"
-        method="POST"
-      >
-        {% csrf_token %}
-        <label class="btn secondary">
-          Choose photo
-          <input type="file" name="photo-file" id="file-input">
-        </label>
-        <button type="submit" class="btn submit">Upload Photo</button>
-      </form>
     </div>
   </div>
 </section>
@@ -130,9 +122,6 @@
   <section class="satellites">
     <div class="subsection-title">
       <h2>Satellites</h2>
-      <img src="{% static 'images/string.svg' %}" alt="A ball of string" />
-      <img src="{% static 'images/mouse.svg' %}" alt="A mouse" />
-      <img src="{% static 'images/fish.svg' %}" alt="A fishy satellite" />
     </div>
     <h3>{{ launch.name }}Satellites</h3>
     <div class="subsection-content">

@@ -50,3 +50,58 @@
   object-fit: cover;
   display: block;
 }
+
+.go-to-calendar {
+  font-size: 20px;
+  padding: 10px;
+  color: #333333;
+  text-decoration: none;
+  background: rgba(250, 248, 176, 0.9);
+  border-radius: 5px;
+}
+
+.go-to-calendar:hover {
+  background-color: aliceblue;
+}
+
+.event-content {
+  position: relative;
+  background-color: #fff;
+}
+
+.event-content img {
+  height: 100px;
+  width: 100%;
+  opacity: 0.3;
+  overflow: hidden;
+}
+
+.event-content span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  color: black;
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-content:hover {
+  cursor: pointer;
+}
+
+.fc-event-title,
+.fc-daygrid-day-number {
+    font-weight: bold;
+}
+
+#calendar-container {
+  margin-top: 50px; 
+}

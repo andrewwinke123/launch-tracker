@@ -3,6 +3,7 @@ from django.urls import reverse
 import random
 from django.contrib.auth.models import User
 
+
 SCHEDULES = (
   ('M', 'Morning'),
   ('N', 'Noon'),

@@ -17,6 +17,8 @@ from django.core.exceptions import ObjectDoesNotExist
 import uuid
 import boto3
 import json
+from django import forms
+
 
 
 S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
@@ -33,7 +35,7 @@ def about(request):
   return render(request, 'about.html')
 
 def launch_index(request):
-    launches = Launch.objects.all()
+    launches = Launch.objects.all().order_by('-id')  # Retrieve launches in descending order of ID (newest first)
     launches_data = [
         {
             'title': launch.mission,
@@ -55,13 +57,14 @@ def launch_index(request):
     ]
 
     for data in launches_data:
-      try:
-          launch = Launch.objects.get(mission=data['title'], date=data['start'])
-          data['extendedProps']['photo_url'] = launch.photo.url
-      except ObjectDoesNotExist:
-          pass 
+        try:
+            launch = Launch.objects.get(mission=data['title'], date=data['start'])
+            data['extendedProps']['photo_url'] = launch.photo.url
+        except ObjectDoesNotExist:
+            pass 
 
-          return render(request, 'launches/index.html', {'launches': launches, 'launches_data': json.dumps(launches_data)})
+    return render(request, 'launches/index.html', {'launches': launches, 'launches_data': json.dumps(launches_data)})
+
 
 
 
@@ -81,10 +84,6 @@ def add_schedule(request, launch_id):
     new_schedule.save()
   return redirect('launch-detail', launch_id=launch_id)
 
-def assoc_satellite(request, launch_id, satellite_id):
-  Launch.objects.get(id=launch_id).satellites.add(satellite_id)
-  return redirect('launch-detail', launch_id=launch_id)
-
 class LaunchUpdate(UpdateView):
   model = Launch
   fields = [
@@ -99,11 +98,39 @@ class LaunchUpdate(UpdateView):
   ]
 
 class LaunchCreate(LoginRequiredMixin, CreateView):
-  model =  Launch
-  fields = '__all__'
-  def form_valid(self, form):
-    form.instance.user = self.request.user
-    return super().form_valid(form)
+    model = Launch
+    fields = [
+        'mission',
+        'model',
+        'mfg',
+        'size',
+        'orbit',
+        'crew',
+        'payload',
+        'location',
+        'date',
+        'satellites',
+    ]
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()  # Save the Launch instance to the database
+        form.instance.satellites.clear()  # Clear any previously associated satellites
+        return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        if 'user' in form.fields:
+            form.fields['user'].widget = forms.HiddenInput()  # Hide the user field in the form
+        return form
+
+
+
+
+def assoc_satellite(request, launch_id, satellite_id):
+    launch = Launch.objects.get(id=launch_id)
+    launch.satellites.add(satellite_id)
+    return redirect('launch-detail', launch_id=launch_id)
 
 class LaunchDelete(LoginRequiredMixin, DeleteView):
   model = Launch
